@@ -1,41 +1,89 @@
 /*
-function called computerPlay that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’.
-Write a function that plays a single round of Rock Paper Scissors.
- two parameters 
- playerSelection (non-case sensitive) 
- computerSelection
-return string: "You Lose! <Paper> beats <Rock>"
-
-template code block
-function playRound(playerSelection, computerSelection) {
-  // your code here!
-}
-
-const playerSelection = "rock";
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
-
-NEW function called game() that calls playRound
-
-computerPlay() - 
-
-input: playerSelection - case insensitive, string, fails if not rock, paper or scissors
-
-output - 
-roundOutcome "You <Lose>! <Paper> beats <Rock>" - each game
-finalOutcome "you won <x> games, the computer won <y> games, <you> win!"
-
-algo - 
-init roundCounter to 0;
-init userScore, computerScore,
-limit round counter to 5 - if 5, display final outcome message
-takes input and converts to lowercase;
-invoke game function
-generates random number to select computer output;
-compares user input against computer output;
-updates userScore, computerScore;
-outputs roundOutcome;
-invoke game function unless roundCounter >=5;
-output finalOutcome
+I have tried to separate each component into its own function.
+I am not completely happy with the alorithm that determines whether the player has won or lost.
+I don't think it follows the DRY method.
+Nor does the playRound function particularly.
 */
 
+let roundCounter = 0;
+let playerScore = 0;
+let computerScore = 0;
+const choiceArray = ['rock', 'paper', 'scissors']
+
+function computerPlay() {
+    randomNumber = Math.floor(Math.random()*3);
+    return choiceArray[randomNumber];
+};
+
+function playerPlay() {
+    result = (prompt('Paper, scissors or rock?', '').toLowerCase());
+    if (result === 'paper' || result === 'scissors' || result === 'rock' ) {
+        return result;
+    }
+    alert('You mispelled something.');
+    playerPlay1();
+};
+
+function chooseRock(computerSelection, playerSelection) {
+    if (computerSelection == 'scissors'){
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return true
+    }
+    if (computerSelection == 'paper'){
+        console.log(`You Lose! ${playerSelection} beats ${computerSelection}`);
+        return false
+    }
+};
+
+function choosePaper(computerSelection, playerSelection) {
+    if (computerSelection == 'rock'){
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return true
+    }
+    if (computerSelection == 'scissors'){
+        console.log(`You Lose! ${playerSelection} beats ${computerSelection}`);
+        return false
+    }
+};
+
+function chooseScissors(computerSelection, playerSelection) {
+    if (computerSelection == 'paper'){
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return true
+    }
+    if (computerSelection == 'rock'){
+        console.log(`You Lose! ${playerSelection} beats ${computerSelection}`);
+        return false
+    }
+};
+function gameDraw() {
+    console.log(`'It's a draw!`);
+    playRound();
+};
+
+function playRound() { //playerSelection, computerSelection
+    // determine winner with switch statement?
+    computerSelection = computerPlay();
+    playerSelection = playerPlay();
+    if (computerSelection === playerSelection) {gameDraw()};
+    if (playerSelection === 'rock') {return chooseRock(computerSelection, playerSelection)};
+    if (playerSelection === 'scissors') {return chooseScissors(computerSelection, playerSelection)};
+    if (playerSelection === 'paper') {return choosePaper(computerSelection, playerSelection)};
+}
+
+function endGame() {
+    if (playerScore < computerScore) {
+        console.log(`You lose! You scored ${playerScore}, the computer scored ${computerScore}`);
+    } else {
+        console.log(`You win! You scored ${playerScore}, the computer scored ${computerScore}`);
+    }
+}
+
+function game() {
+    while (roundCounter <5) {
+        roundCounter += 1;
+        playRound() ? (playerScore += 1) : (computerScore += 1);
+    };
+    endGame();
+}
+game();
