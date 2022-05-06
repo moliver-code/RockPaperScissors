@@ -1,0 +1,17 @@
+.button>button {
+   font-size: 50px;
+}
+
+.button {
+    margin: auto;
+}
+
+.text {
+    font-size: 50px;
+    margin: auto;
+}
+
+div.main {
+    display: flex;
+    flex-direction: column;
+}
